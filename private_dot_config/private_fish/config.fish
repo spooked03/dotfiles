@@ -6,6 +6,8 @@ zoxide init fish | source
 fzf --fish | source
 
 alias yay="paru"
+alias nano="micro"
+
 #alias ff="fd | fzf --preview 'bat --color=always --style=numbers {}'"
 function ff
   fd $argv | fzf --preview 'bat --color=always --style=numbers {}'
