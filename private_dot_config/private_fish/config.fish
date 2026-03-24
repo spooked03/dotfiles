@@ -7,7 +7,10 @@ fzf --fish | source
 
 alias yay="paru"
 alias nano="micro"
+
+set -g fish_greeting
 set -gx EDITOR micro
+
 #alias ff="fd | fzf --preview 'bat --color=always --style=numbers {}'"
 function ff
   fd $argv | fzf --preview 'bat --color=always --style=numbers {}'
