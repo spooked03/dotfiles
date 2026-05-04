@@ -7,6 +7,7 @@ fzf --fish | source
 
 alias yay="paru"
 alias nano="micro"
+alias s="kitten ssh"
 
 set -g fish_greeting
 set -gx EDITOR micro
