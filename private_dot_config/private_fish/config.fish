@@ -16,8 +16,5 @@ function ff
   fd $argv | fzf --preview 'bat --color=always --style=numbers {}'
 end
 
-
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH /home/nessie/.lmstudio/bin
-# End of LM Studio CLI section
-
+set -gx PATH /opt/cuda/bin $PATH
+set -gx LD_LIBRARY_PATH /opt/cuda/lib64 $LD_LIBRARY_PATH
