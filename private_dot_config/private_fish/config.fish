@@ -9,6 +9,12 @@ alias yay="paru"
 alias nano="micro"
 alias s="kitten ssh"
 
+alias ls='lsd'
+alias l='lsd -l'
+alias la='lsd -a'
+alias lla='lsd -la'
+alias lt='lsd --tree'
+
 set -g fish_greeting
 set -gx EDITOR micro
 
