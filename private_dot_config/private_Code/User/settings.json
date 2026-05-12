@@ -1,0 +1,15 @@
+{
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": false,
+    "workbench.colorTheme": "Gruvbox Dark Soft",
+    "files.autoSave": "afterDelay",
+    "git.autofetch": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    },
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "chat.mcp.gallery.enabled": false
+}
