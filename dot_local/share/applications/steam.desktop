@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Steam
+Comment=Manage and play games with MangoHud available
+Exec=/usr/bin/env MANGOHUD=1 /usr/bin/steam %U
+Icon=steam
+Terminal=false
+Type=Application
+Categories=Network;FileTransfer;Game;
+MimeType=x-scheme-handler/steam;x-scheme-handler/steamlink;
+PrefersNonDefaultGPU=true
+X-KDE-RunOnDiscreteGpu=true

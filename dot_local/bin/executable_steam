@@ -1,0 +1,4 @@
+#!/bin/sh
+# Enable MangoHud only for Steam and its game processes, never the desktop.
+export MANGOHUD=1
+exec /usr/bin/steam "$@"
