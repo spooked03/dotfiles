@@ -3,6 +3,11 @@
   "websearch": {
     "provider": "exa-parallel"
   },
+  "permissions": [
+    { "action": "super-productivity_*", "resource": "*", "effect": "ask" },
+    { "action": "super-productivity_delete_task", "resource": "*", "effect": "deny" },
+    { "action": "super-productivity_delete_habit", "resource": "*", "effect": "deny" }
+  ],
   "mcp": {
     "drawio": {
       "type": "local",
@@ -16,6 +21,15 @@
       "environment": {
         "BLENDER_HOST": "localhost",
         "BLENDER_PORT": "9876"
+      }
+    },
+    "servers": {
+      "super-productivity": {
+        "type": "local",
+        "command": [
+          "/usr/bin/node",
+          "/home/sietse/.local/share/opencode/mcp/super-productivity/node_modules/super-productivity-mcp/dist/index.js"
+        ]
       }
     }
   }
