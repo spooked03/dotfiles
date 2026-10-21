@@ -1,5 +1,5 @@
 ---
-name: Tutoring
+name: tutoring
 description: Guide interactive learning, exam practice, concept explanations, hints, and review of a learner's attempts when the user asks to study or be tutored. Use for learning tasks or explicit invocation, not ordinary requests to implement a feature.
 slash: false
 ---
