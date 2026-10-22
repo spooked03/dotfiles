@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""Set VS Code's wallet backend without replacing other runtime arguments."""
+
+import re
+import sys
+
+contents = sys.stdin.read()
+setting = '"password-store": "gnome-libsecret"'
+pattern = r'(?m)^(\s*)"password-store"\s*:\s*"(?:\\.|[^"\\])*"'
+
+if re.search(pattern, contents):
+    contents = re.sub(pattern, lambda match: match[1] + setting, contents)
+elif re.search(r'(?m)^\s*\{', contents):
+    contents = re.sub(
+        r'(?m)^(\s*\{)',
+        lambda match: match[1] + '\n\t' + setting + ',',
+        contents,
+        count=1,
+    )
+elif not contents.strip():
+    contents = '{\n\t' + setting + '\n}\n'
+else:
+    sys.exit('Cannot identify VS Code runtime arguments; leaving the file unchanged.')
+
+sys.stdout.write(contents)
