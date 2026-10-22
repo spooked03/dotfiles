@@ -1,4 +1,5 @@
 {
+    "editor.fontFamily": "'IosevkaTerm Nerd Font', monospace",
     "editor.wordWrap": "on",
     "editor.minimap.enabled": false,
     "workbench.colorTheme": "Gruvbox Dark Soft",
