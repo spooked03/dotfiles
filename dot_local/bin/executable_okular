@@ -1,0 +1,4 @@
+#!/bin/sh
+# Load KDE's configured dark palette when running outside Plasma (e.g. Niri).
+export QT_QPA_PLATFORMTHEME=kde
+exec /usr/bin/okular "$@"
