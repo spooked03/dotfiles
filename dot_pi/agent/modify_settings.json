@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+"""Apply shared pi settings while preserving this installation's device ID."""
+
+import json
+import sys
+
+contents = sys.stdin.read()
+try:
+    current = json.loads(contents) if contents.strip() else {}
+except json.JSONDecodeError as error:
+    sys.exit(f"Cannot parse pi settings; leaving the file unchanged: {error}")
+if not isinstance(current, dict):
+    sys.exit("Pi settings must be a JSON object; leaving the file unchanged.")
+
+settings = json.loads('''{
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
+  "defaultProvider": "openai",
+  "defaultProjectTrust": "ask",
+  "enableInstallTelemetry": false,
+  "enableAnalytics": false,
+  "lastChangelogVersion": "1.4.0",
+  "defaultModel": "gpt-6.1-sol",
+  "packages": [
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:pi-web-access",
+    "npm:pi-subagents@0.81.0",
+    "npm:pi-lens",
+    {
+      "source": "npm:pi-fff",
+      "extensions": []
+    },
+    "npm:@juicesharp/rpiv-todo"
+  ]
+}''')
+
+# This identifier belongs to the local installation, never the shared config.
+if "deviceId" in current:
+    settings["deviceId"] = current["deviceId"]
+
+json.dump(settings, sys.stdout, indent=2)
+sys.stdout.write("\n")
