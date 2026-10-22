@@ -1,5 +1,5 @@
 ---
-name: Clean PDF Markdown
+name: clean-pdf-markdown
 description: Clean and repair Markdown converted or extracted from PDFs, including OCR artifacts, broken paragraphs, page headers, lists, tables, and exam formatting. Use for PDF-to-Markdown cleanup requests, not unrelated Markdown editing.
 slash: false
 ---

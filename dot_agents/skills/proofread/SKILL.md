@@ -1,5 +1,5 @@
 ---
-name: Proofread
+name: proofread
 description: Check spelling, grammar, punctuation, and phrasing when the user asks to proofread, correct, or language-check Dutch or English text. Also use when explicitly requested by name.
 slash: false
 ---

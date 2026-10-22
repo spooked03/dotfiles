@@ -1,5 +1,5 @@
 ---
-name: Improve Prompt
+name: improve-prompt
 description: Review, clarify, or rewrite an AI prompt when the user asks to improve a prompt, check prompt quality, or turn rough instructions into a reusable prompt. Also use when explicitly requested by name.
 slash: false
 ---
