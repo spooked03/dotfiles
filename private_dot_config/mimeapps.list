@@ -1,0 +1,28 @@
+[Added Associations]
+video/mp4=mpv.desktop;
+x-scheme-handler/nxm=DMM-handler.desktop;
+application/pdf=okularApplication_pdf.desktop;
+application/vnd.comicbook+zip=okularApplication_pdf.desktop;
+application/vnd.comicbook-rar=okularApplication_pdf.desktop;
+application/x-bzpdf=okularApplication_pdf.desktop;
+application/x-ext-pdf=okularApplication_pdf.desktop;
+application/x-gzpdf=okularApplication_pdf.desktop;
+
+[Default Applications]
+video/mp4=mpv.desktop
+x-scheme-handler/discord=vesktop.desktop
+x-scheme-handler/nxm=DMM-handler.desktop
+x-scheme-handler/superproductivity=superproductivity.desktop
+x-scheme-handler/jetbrains=jetbrainsd.desktop
+text/html=helium.desktop
+x-scheme-handler/http=helium.desktop
+x-scheme-handler/https=helium.desktop
+x-scheme-handler/about=helium.desktop
+x-scheme-handler/unknown=helium.desktop
+application/pdf=okularApplication_pdf.desktop
+application/vnd.comicbook+zip=okularApplication_pdf.desktop
+application/vnd.comicbook-rar=okularApplication_pdf.desktop
+application/x-bzpdf=okularApplication_pdf.desktop
+application/x-ext-pdf=okularApplication_pdf.desktop
+application/x-gzpdf=okularApplication_pdf.desktop
+inode/directory=org.kde.dolphin.desktop
