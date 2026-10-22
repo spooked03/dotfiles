@@ -188,6 +188,8 @@ overview {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 environment {
   XDG_CURRENT_DESKTOP "niri"
+  // Load the configured KDE palette for Qt apps outside Plasma.
+  QT_QPA_PLATFORMTHEME "kde"
 }
 hotkey-overlay {
     skip-at-startup
