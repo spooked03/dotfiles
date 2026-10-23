@@ -1,8 +1,9 @@
-import { Action, ActionPanel, List, Toast, closeMainWindow, showToast } from "@vicinae/api";
+import { Action, ActionPanel, Icon, List, Toast, closeMainWindow, showToast } from "@vicinae/api";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { useCallback, useEffect, useState } from "react";
 import { parsePages, settingsArgs, type SettingsPage } from "./pages";
+import { pageIconName } from "./icons";
 
 const execFileAsync = promisify(execFile);
 
@@ -62,7 +63,7 @@ export default function DmsSettings() {
         actions={actions()}
       />
       {pages.map((page) => (
-        <List.Item key={page.id} id={page.id} title={page.title} keywords={page.keywords} icon="danklogo.svg" actions={actions(page.id)} />
+        <List.Item key={page.id} id={page.id} title={page.title} keywords={page.keywords} icon={Icon[pageIconName(page.id)]} actions={actions(page.id)} />
       ))}
     </List>
   );

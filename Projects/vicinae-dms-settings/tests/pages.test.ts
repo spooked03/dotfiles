@@ -2,6 +2,15 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { execFileSync } from "node:child_process";
 import { parsePages, settingsArgs } from "../src/pages.ts";
+import { pageIconName, pageIcons } from "../src/icons.ts";
+
+test("uses relevant icons and a safe fallback for new pages", () => {
+  assert.equal(pageIconName("displays"), "Monitor");
+  assert.equal(pageIconName("audio"), "SpeakerHigh");
+  assert.equal(pageIconName("network_wifi"), "Wifi");
+  assert.equal(pageIconName("new_future_page"), "Cog");
+  assert.equal(pageIconName("toString"), "Cog");
+});
 
 test("parses, labels and deduplicates pages, including Windows line endings", () => {
   const pages = parsePages("audio\r\nnetwork_wifi\r\n\naudio\nnew_future_page\n");
@@ -27,4 +36,7 @@ test("loads all pages from the running DMS instance", () => {
   assert.ok(pages.length > 0);
   assert.ok(pages.some((page) => page.id === "audio"));
   assert.ok(pages.some((page) => page.id === "network_wifi"));
+  for (const page of pages) {
+    assert.ok(Object.hasOwn(pageIcons, page.id), `Missing specific icon for ${page.id}`);
+  }
 });
