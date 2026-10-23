@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/vicinaehq/vicinae/main/extra/schemas/extension.json",
+  "name": "dms-settings",
+  "title": "DMS Settings",
+  "description": "Search and open Dank Material Shell settings pages.",
+  "categories": ["System"],
+  "license": "MIT",
+  "author": "nessie",
+  "icon": "danklogo.svg",
+  "commands": [
+    {
+      "name": "settings",
+      "title": "DMS Settings",
+      "subtitle": "Dank Material Shell",
+      "description": "Browse and search all DMS settings pages.",
+      "keywords": ["dank", "shell", "preferences", "configuration"],
+      "mode": "view"
+    }
+  ],
+  "scripts": {
+    "build": "vici build",
+    "dev": "vici develop",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/pages.test.ts"
+  },
+  "dependencies": {
+    "@vicinae/api": "0.29.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.9.3"
+  },
+  "private": true
+}
