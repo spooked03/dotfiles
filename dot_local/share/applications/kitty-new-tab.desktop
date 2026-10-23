@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Kitty — New Tab
+GenericName=Terminal emulator
+Comment=Open a directory in a new tab of an existing Kitty window
+Exec=/home/nessie/.local/bin/kitty-new-tab %u
+Icon=kitty
+Terminal=false
+StartupNotify=false
+Categories=System;TerminalEmulator;
+MimeType=inode/directory;
