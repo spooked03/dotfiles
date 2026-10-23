@@ -1,0 +1,157 @@
+#!/usr/bin/python3
+"""Resolve Kitty local links and dispatch Markdown to Obsidian, solutions to Rider."""
+import argparse
+import json
+import logging
+import os
+from pathlib import Path
+import re
+import shutil
+import socket
+import subprocess
+import time
+from urllib.parse import unquote, urlsplit
+
+RIDER = Path.home() / ".local/share/JetBrains/Toolbox/apps/rider/bin/rider"
+OSC_LINK = re.compile(r"\x1b\]8;[^;]*;([^\x1b\x07]+)")
+
+
+def path_from_link(target):
+    if target.lower().startswith("file:"):
+        url = urlsplit(target)
+        if url.netloc and url.netloc.lower() not in {
+            "localhost", socket.gethostname().lower(), socket.getfqdn().lower()
+        }:
+            raise ValueError("Refusing to open a file on a different host")
+        return Path(unquote(url.path)).expanduser()
+    if "://" in target:
+        raise ValueError("Expected a local file link")
+    return Path(unquote(target.split("#", 1)[0].split("?", 1)[0])).expanduser()
+
+
+def existing_file(path):
+    if path.is_file():
+        return path.resolve()
+    # Editor-style line/column suffixes are not part of the filename.
+    stripped = Path(re.sub(r":\d+(?::\d+)?$", "", str(path)))
+    if stripped.is_file():
+        return stripped.resolve()
+    return None
+
+
+def terminal_links():
+    window_id = os.environ.get("KITTY_WINDOW_ID")
+    if not window_id or not shutil.which("kitty"):
+        return []
+    address = os.environ.get("KITTY_LISTEN_ON")
+    runtime = Path(os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"))
+    addresses = [address] if address else [f"unix:{p}" for p in runtime.glob("kitty-vicinae-*")]
+    logging.info("Resolving relative link using terminal window %s, sockets %s", window_id, addresses)
+    links = []
+    for address in addresses:
+        result = subprocess.run(
+            ["kitty", "@", "--to", address, "get-text", "--match", f"id:{window_id}",
+             "--ansi", "--extent", "all"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if result.returncode == 0:
+            links.extend(OSC_LINK.findall(result.stdout))
+            # A response may contain only bare filenames plus a `cd /project`
+            # command, with no absolute file hyperlink to infer the root from.
+            plain = re.sub(r"\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)", "", result.stdout)
+            plain = re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", plain)
+            for match in re.finditer(r'''(?:^|\s)cd\s+(?:"(/[^"\n]+)"|'(/[^'\n]+)'|(/[^\s;`]+))''', plain):
+                directory = Path(next(value for value in match.groups() if value))
+                if directory.is_dir():
+                    links.append((directory / ".kitty-link-anchor").as_uri())
+    return links
+
+
+def resolve_link(target):
+    path = path_from_link(target)
+    found = existing_file(path)
+    if found:
+        return found
+    if path.is_absolute():
+        raise FileNotFoundError(f"File does not exist: {path}")
+    # Pi can emit project-relative hrefs while its terminal is in $HOME.
+    # Infer project roots from absolute file links in this same terminal tab.
+    # Never choose arbitrarily when more than one existing file matches.
+    candidates = set()
+    for link in terminal_links():
+        if not link.lower().startswith("file:"):
+            continue
+        try:
+            anchor = path_from_link(link)
+        except ValueError:
+            continue
+        for parent in anchor.parents:
+            found = existing_file(parent / path)
+            if found:
+                candidates.add(found)
+    if len(candidates) == 1:
+        return candidates.pop()
+    if candidates:
+        raise ValueError(f"Ambiguous relative link {target}: " + ", ".join(map(str, sorted(candidates))))
+    raise FileNotFoundError(f"Cannot resolve {target} from {Path.cwd()} or this tab's project links")
+
+
+def command_for(path):
+    if path.suffix.lower() in {".md", ".markdown", ".mkd"}:
+        return ["/usr/bin/obsidian", str(path)], "obsidian"
+    if path.suffix.lower() in {".sln", ".slnx"}:
+        return [str(RIDER), str(path)], "rider"
+    raise ValueError(f"No local-link handler for {path.suffix}")
+
+
+def focus_window(app_name, stem):
+    if not shutil.which("niri"):
+        return
+    for _ in range(50):
+        time.sleep(0.1)
+        result = subprocess.run(["niri", "msg", "--json", "windows"],
+                                capture_output=True, text=True, timeout=3)
+        if result.returncode:
+            return
+        windows = [w for w in json.loads(result.stdout)
+                   if app_name in (w.get("app_id") or "").casefold()]
+        matching = [w for w in windows if stem.casefold() in (w.get("title") or "").casefold()]
+        if matching:
+            subprocess.run(["niri", "msg", "action", "focus-window", "--id", str(matching[0]["id"])],
+                           capture_output=True, timeout=3)
+            return
+    logging.warning("Launched %s, but could not verify a window title for %s", app_name, stem)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--resolve-only", action="store_true")
+    parser.add_argument("target")
+    args = parser.parse_args()
+    state = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / "kitty"
+    state.mkdir(parents=True, exist_ok=True, mode=0o700)
+    logging.basicConfig(filename=state / "file-open.log", level=logging.INFO,
+                        format="%(asctime)s %(levelname)s %(message)s")
+    try:
+        logging.info("Request %r (cwd=%s, KITTY_WINDOW_ID=%s)", args.target, Path.cwd(), os.environ.get("KITTY_WINDOW_ID"))
+        path = resolve_link(args.target)
+        command, app_name = command_for(path)
+        if args.resolve_only:
+            print(json.dumps({"path": str(path), "command": command}))
+            return 0
+        logging.info("Opening %r as %s in %s", args.target, path, app_name)
+        # Do not tie the GUI application's lifetime to this background helper.
+        with (state / "file-open.log").open("a") as output:
+            subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=output,
+                             stderr=output, start_new_session=True)
+        focus_window(app_name, path.stem)
+        return 0
+    except Exception as error:
+        logging.exception("Could not open %r", args.target)
+        if shutil.which("notify-send"):
+            subprocess.run(["notify-send", "Could not open file link", str(error)], timeout=5)
+        parser.exit(1, f"{error}\n")
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,8 @@
+#!/bin/sh
+# Refresh compiled MIME data whenever the tracked solution-file rules change.
+# MIME definition: {{ include "dot_local/share/mime/packages/user-dotnet-solutions.xml" | sha256sum }}
+set -eu
+
+if command -v update-mime-database >/dev/null 2>&1; then
+    update-mime-database "${XDG_DATA_HOME:-$HOME/.local/share}/mime"
+fi
