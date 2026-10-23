@@ -1,16 +1,17 @@
 {
-    "editor.fontFamily": "'IosevkaTerm Nerd Font', monospace",
+    "editor.fontFamily": "'Iosevka', monospace",
     "editor.wordWrap": "on",
     "editor.minimap.enabled": false,
-    "workbench.colorTheme": "Gruvbox Dark Soft",
     "files.autoSave": "afterDelay",
     "git.autofetch": true,
     "github.copilot.enable": {
-        "*": true,
+        "*": false,
         "plaintext": false,
         "markdown": true,
-        "scminput": false
+        "scminput": false,
+        "csharp": false
     },
     "github.copilot.nextEditSuggestions.enabled": true,
-    "chat.mcp.gallery.enabled": false
+    "chat.mcp.gallery.enabled": false,
+    "workbench.colorTheme": "Gruvbox Dark Soft"
 }
