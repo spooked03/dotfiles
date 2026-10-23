@@ -1,0 +1,76 @@
+[meta]
+name = "DMS Charcoal Lavender"
+description = "Charcoal and lavender palette sampled from the DMS launcher reference"
+variant = "dark"
+inherits = "vicinae-dark"
+
+[colors.core]
+background = "#211f24"
+secondary_background = "#2b292f"
+foreground = "#ededed"
+accent = "#d0bcff"
+accent_foreground = "#381e72"
+border = "#47444b"
+
+[colors.main_window]
+border = "#47444b"
+footer = { background = "#2b292f" }
+
+[colors.settings_window]
+border = "#47444b"
+
+[colors.text]
+default = "#ededed"
+muted = "#cac4d0"
+placeholder = "#938f99"
+selection = { background = "#d0bcff", foreground = "#381e72" }
+
+[colors.text.links]
+default = "#d0bcff"
+visited = "#ccc2dc"
+
+[colors.input]
+border = "#47444b"
+border_focus = "#d0bcff"
+
+[colors.button.primary]
+background = "#d0bcff"
+foreground = "#381e72"
+hover = { background = "#dfceff" }
+focus = { outline = "#d0bcff" }
+
+[colors.list.item.hover]
+background = "#2b292f"
+foreground = "#ededed"
+secondary_foreground = "#cac4d0"
+
+[colors.list.item.selection]
+background = "#4f435f"
+foreground = "#f4efff"
+secondary_background = "#4f435f"
+secondary_foreground = "#e2d8ef"
+
+[colors.grid.item]
+background = "#2b292f"
+hover = { outline = "#cac4d0" }
+selection = { outline = "#d0bcff" }
+
+[colors.shortcut]
+border = "#504d55"
+
+[colors.scrollbars]
+background = "#504d55"
+
+[colors.loading]
+bar = "#d0bcff"
+spinner = "#d0bcff"
+
+[colors.accents]
+blue = "#adc6ff"
+green = "#a8d5a2"
+magenta = "#eb7396"
+orange = "#efb580"
+red = "#f2b8b5"
+yellow = "#e5c890"
+cyan = "#a0cfd0"
+purple = "#d0bcff"

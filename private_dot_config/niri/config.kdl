@@ -300,6 +300,13 @@ recent-windows {
     }
 }
 
+// Keep Vicinae separate from the DMS launcher on Mod+Space.
+binds {
+    Mod+Shift+Space repeat=false hotkey-overlay-title="Vicinae" {
+        spawn "vicinae" "toggle";
+    }
+}
+
 // Include dms files
 include "dms/colors.kdl"
 include "dms/layout.kdl"

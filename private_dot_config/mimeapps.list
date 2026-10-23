@@ -26,3 +26,4 @@ application/x-bzpdf=okularApplication_pdf.desktop
 application/x-ext-pdf=okularApplication_pdf.desktop
 application/x-gzpdf=okularApplication_pdf.desktop
 inode/directory=org.kde.dolphin.desktop
+text/markdown=obsidian.desktop
