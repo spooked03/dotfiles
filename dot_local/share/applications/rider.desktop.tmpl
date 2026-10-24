@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Rider
+Comment=JetBrains Rider via the stable Toolbox installation path
+Exec="{{ .chezmoi.homeDir }}/.local/share/JetBrains/Toolbox/apps/rider/bin/rider" %f
+Icon={{ .chezmoi.homeDir }}/.local/share/JetBrains/Toolbox/apps/rider/bin/rider.svg
+Terminal=false
+Categories=Development;IDE;
+MimeType=application/x-ms-solution;
+StartupWMClass=jetbrains-rider
+StartupNotify=true
+# Toolbox already provides a menu entry; this entry provides stable associations.
+NoDisplay=true
