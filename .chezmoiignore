@@ -1,0 +1,7 @@
+# Keep machine-local template data out of the source state.
+.config/chezmoi/chezmoi.toml
+
+# Backups can contain private settings; do not add them accidentally.
+.config/vicinae/*.bak*
+.local/state/vicinae-local-patches/*.bak
+.local/share/vicinae/extensions/store.vicinae.fff-search/*.bak*
