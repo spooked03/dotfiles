@@ -73,7 +73,8 @@
          }
       },
       "@luolei/store.raycast.karakeep": {
-         "preferences": {
+{{ if eq (get . "deviceRole") "laptop" }}         "enabled": false
+{{ else }}         "preferences": {
             "language": "en",
             "apiUrl": {{ .karakeepUrl | toJson }},
             "prefillUrlFromBrowser": false,
@@ -126,7 +127,7 @@
                "enabled": false
             }
          }
-      },
+{{ end }}      },
       "applications": {
          "preferences": {
             "defaultAction": "launch",
@@ -162,7 +163,7 @@
          "preferences": {
             "autoIndexing": true,
             "indexingPaths": [
-               "/home/nessie"
+               {{ .chezmoi.homeDir | toJson }}
             ],
             "excludedIndexingPaths": []
          }

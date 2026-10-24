@@ -1,5 +1,5 @@
 {
-  "customThemeFile": "/home/sietse/.config/DankMaterialShell/themes/gruvboxMaterial/theme.json",
+  "customThemeFile": {{ printf "%s/.config/DankMaterialShell/themes/gruvboxMaterial/theme.json" .chezmoi.homeDir | toJson }},
   "registryThemeVariants": {
     "gruvboxMaterial": "hard"
   },
@@ -36,7 +36,8 @@
   "batteryLockTimeout": 60,
   "batterySuspendTimeout": 1800,
   "batteryPostLockMonitorTimeout": 15,
-  "lockBeforeSuspend": true,
+{{ if eq (get . "deviceRole") "laptop" }}  "batteryChargeLimit": 80,
+{{ end }}  "lockBeforeSuspend": true,
   "matugenTemplateKitty": false,
   "dockSpacing": 8,
   "enableFprint": true,

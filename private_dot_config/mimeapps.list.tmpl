@@ -28,4 +28,4 @@ application/x-gzpdf=okularApplication_pdf.desktop
 inode/directory=org.kde.dolphin.desktop
 text/markdown=obsidian.desktop
 text/plain=obsidian.desktop
-application/x-ms-solution=jetbrains-rider-146126be-21bd-4f4d-ae38-96af4b0861bb.desktop
+application/x-ms-solution={{ get . "riderDesktopEntry" | default "jetbrains-rider-146126be-21bd-4f4d-ae38-96af4b0861bb.desktop" }}

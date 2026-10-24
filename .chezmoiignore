@@ -5,3 +5,10 @@
 .config/vicinae/*.bak*
 .local/state/vicinae-local-patches/*.bak
 .local/share/vicinae/extensions/store.vicinae.fff-search/*.bak*
+
+# Preserve the laptop's DankMaterialShell -> dms compatibility symlink.
+{{ if eq (get . "deviceRole") "laptop" }}
+.config/DankMaterialShell
+{{ else }}
+.config/dms
+{{ end }}

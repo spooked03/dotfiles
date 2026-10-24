@@ -3,8 +3,8 @@
 # Copy the source tab's environment so relative links use that tab's context.
 protocol file
 url (?i).*\.(?:md|markdown|mkd|sln|slnx)(?::\d+(?::\d+)?)?(?:[?#].*)?
-action launch --type=background --cwd=current --copy-env /home/nessie/.local/bin/open-local-link-from-kitty ${URL}
+action launch --type=background --cwd=current --copy-env {{ .chezmoi.homeDir }}/.local/bin/open-local-link-from-kitty ${URL}
 
 # Pi also emits relative project paths, which have no file:// protocol.
 url (?i)(?![a-z][a-z0-9+.-]*://|mailto:|obsidian:).*\.(?:md|markdown|mkd|sln|slnx)(?::\d+(?::\d+)?)?(?:[?#].*)?
-action launch --type=background --cwd=current --copy-env /home/nessie/.local/bin/open-local-link-from-kitty ${URL}
+action launch --type=background --cwd=current --copy-env {{ .chezmoi.homeDir }}/.local/bin/open-local-link-from-kitty ${URL}
