@@ -23,7 +23,6 @@ settings = json.loads('''{
   "packages": [
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-web-access",
-    "npm:pi-lens",
     {
       "source": "npm:pi-fff",
       "extensions": []
