@@ -1,10 +1,14 @@
 [opener]
+rider = [
+  { run = 'rider %s', desc = "Rider", for = "linux", orphan = true },
+]
 obsidian = [
   { run = 'obsidian %s', desc = "Obsidian", for = "linux", orphan = true },
 ]
 
 [open]
 prepend_rules = [
+  { url = "*.sln", use = ["rider", "edit", "reveal"] },
   { url = "*.md", use = ["obsidian", "edit", "reveal"] },
   { mime = "text/markdown", use = ["obsidian", "edit", "reveal"] },
 ]
