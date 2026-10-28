@@ -1,0 +1,26 @@
+# Minimal trial settings. Do not change application themes or Niri configuration.
+[shell]
+polkit_agent = true
+telemetry_enabled = false
+
+[theme.templates]
+enable_builtin_templates = false
+enable_community_templates = false
+
+[wallpaper.default]
+path = "/usr/share/noctalia/assets/noctalia-wallpaper.png"
+
+[backdrop]
+enabled = false
+
+# External displays need DDC/CI rather than the laptop backlight interface.
+[brightness]
+enable_ddcutil = true
+
+[bar.default]
+start = ["launcher", "wallpaper", "workspaces", "active_window"]
+
+[widget.active_window]
+display = "text_only"
+max_length = 260
+title_scroll = "on_hover"

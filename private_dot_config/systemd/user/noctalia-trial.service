@@ -1,0 +1,12 @@
+[Unit]
+Description=Noctalia Shell (session-only trial)
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+ConditionEnvironment=XDG_CURRENT_DESKTOP=niri
+
+[Service]
+ExecStart=/usr/bin/noctalia
+Restart=on-failure
+RestartSec=2
+Environment=XDG_MENU_PREFIX=plasma-

@@ -304,6 +304,23 @@ recent-windows {
 include "dms/colors.kdl"
 include "dms/layout.kdl"
 include "dms/alttab.kdl"
-include "dms/binds.kdl"
+// Shell-aware shortcuts; intentionally not the original dms/binds.kdl.
+include "shell-trial/binds.kdl"
 include "dms/outputs.kdl"
 include "dms/cursor.kdl"
+
+// Noctalia trial integration; DMS remains the default at login.
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating true
+}
+layer-rule {
+    match namespace="^noctalia-wallpaper"
+    place-within-backdrop true
+}
+binds {
+    Mod+Shift+Space hotkey-overlay-title="Noctalia Launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+    Mod+S hotkey-overlay-title="Noctalia Control Center" { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+    Mod+Alt+F11 hotkey-overlay-title="Try Noctalia" { spawn "/home/nessie/.local/bin/desktop-shell" "noctalia"; }
+    Mod+Alt+F12 hotkey-overlay-title="Return to DMS" { spawn "/home/nessie/.local/bin/desktop-shell" "dms"; }
+}

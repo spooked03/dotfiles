@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Accept existing DMS IPC arguments; translate only during the Noctalia trial.
+set -euo pipefail
+if ! systemctl --user is-active --quiet noctalia-trial.service; then
+    exec dms "$@"
+fi
+[[ ${1:-} == ipc && ${2:-} == call ]] || exit 2
+shift 2
+target=${1:-}
+action=${2:-}
+amount=${3:-}
+case "$target:$action" in
+    clipboard:toggle) exec noctalia msg panel-toggle clipboard ;;
+    processlist:focusOrToggle) exec kitty --single-instance btop ;;
+    powermenu:toggle) exec noctalia msg panel-toggle session ;;
+    settings:focusOrToggle) exec noctalia msg settings-toggle ;;
+    dankdash:wallpaper) exec noctalia msg panel-toggle wallpaper ;;
+    notifications:toggle) exec noctalia msg panel-toggle control-center notifications ;;
+    lock:lock) exec noctalia msg session lock ;;
+    audio:increment) exec noctalia msg volume-up "${amount:-3}" ;;
+    audio:decrement) exec noctalia msg volume-down "${amount:-3}" ;;
+    audio:mute) exec noctalia msg volume-mute ;;
+    audio:micmute) exec noctalia msg mic-mute ;;
+    mpris:playPause) exec noctalia msg media toggle ;;
+    mpris:previous) exec noctalia msg media previous ;;
+    mpris:next) exec noctalia msg media next ;;
+    mpris:increment) exec noctalia msg media volume-up "${amount:-3}" ;;
+    mpris:decrement) exec noctalia msg media volume-down "${amount:-3}" ;;
+    brightness:increment) exec noctalia msg brightness-up current "${amount:-5}" ;;
+    brightness:decrement) exec noctalia msg brightness-down current "${amount:-5}" ;;
+    *) exec notify-send 'Noctalia trial' 'This DMS-specific shortcut is unavailable in Noctalia.' ;;
+esac
