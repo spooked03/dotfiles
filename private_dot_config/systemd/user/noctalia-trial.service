@@ -1,5 +1,5 @@
 [Unit]
-Description=Noctalia Shell (session-only trial)
+Description=Noctalia Shell
 PartOf=graphical-session.target
 After=graphical-session.target
 Requisite=graphical-session.target
@@ -10,3 +10,6 @@ ExecStart=/usr/bin/noctalia
 Restart=on-failure
 RestartSec=2
 Environment=XDG_MENU_PREFIX=plasma-
+
+[Install]
+WantedBy=graphical-session.target

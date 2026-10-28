@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Accept existing DMS IPC arguments; translate only during the Noctalia trial.
+# Accept existing DMS IPC arguments; translate while Noctalia is running.
 set -euo pipefail
 if ! systemctl --user is-active --quiet noctalia-trial.service; then
     exec dms "$@"
@@ -28,5 +28,5 @@ case "$target:$action" in
     mpris:decrement) exec noctalia msg media volume-down "${amount:-3}" ;;
     brightness:increment) exec noctalia msg brightness-up current "${amount:-5}" ;;
     brightness:decrement) exec noctalia msg brightness-down current "${amount:-5}" ;;
-    *) exec notify-send 'Noctalia trial' 'This DMS-specific shortcut is unavailable in Noctalia.' ;;
+    *) exec notify-send 'Noctalia' 'This DMS-specific shortcut is unavailable in Noctalia.' ;;
 esac

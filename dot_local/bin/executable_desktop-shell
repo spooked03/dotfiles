@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Session-only switch: DMS remains enabled for the next login.
+# Session-only switch: Noctalia remains the default for the next login.
 set -euo pipefail
 exec 9>"${XDG_RUNTIME_DIR:?}/desktop-shell-switch.lock"
 flock 9
